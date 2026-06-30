@@ -125,7 +125,7 @@ router.post('/', authMiddleware, adminMiddleware, upload.single('file'), async (
       importLog.created_count = created;
       importLog.updated_count = updated;
       importLog.skipped_count = skipped;
-      importLog.errors = errors;
+      importLog.validation_errors = errors;
       importLog.completed_at = new Date();
       importLog.processing_time_ms = Date.now() - startTime;
 
@@ -153,7 +153,7 @@ router.post('/', authMiddleware, adminMiddleware, upload.single('file'), async (
       });
     } catch (fileError) {
       importLog.status = 'failed';
-      importLog.errors = [{ error: fileError.message }];
+      importLog.validation_errors = [{ error: fileError.message }];
       importLog.completed_at = new Date();
       importLog.processing_time_ms = Date.now() - startTime;
       await importLog.save();

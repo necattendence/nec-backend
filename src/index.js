@@ -7,6 +7,7 @@ const path = require('path');
 // Routes
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/students');
+const studentRegistrationRoutes = require('./routes/studentRegistrations');
 const importRoutes = require('./routes/import');
 const messageRoutes = require('./routes/messages');
 const adminRoutes = require('./routes/admin');
@@ -36,10 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('✅ MongoDB connected successfully');
   })
@@ -55,6 +53,7 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/student-registrations', studentRegistrationRoutes);
 app.use('/api/students/import', importRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/messages', messageRoutes);
@@ -73,7 +72,7 @@ const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
-  console.log(`MongoDB URI: ${process.env.MONGODB_URI}`);
+  console.log('MongoDB URI: configured');
 });
 
 // Graceful shutdown

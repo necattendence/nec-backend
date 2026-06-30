@@ -15,7 +15,7 @@ const importLogSchema = new mongoose.Schema(
     created_count: Number,
     updated_count: Number,
     skipped_count: Number,
-    errors: [
+    validation_errors: [
       {
         row: Number,
         error: String,
